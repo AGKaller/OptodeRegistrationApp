@@ -1,9 +1,7 @@
-function [planeNormal, nearestVerts] = getOptodeTangentPlane(optPos,convHullVert,convHullFac)
+function [planeNormal, nearestVerts] = getOptodeTangentPlane(optPos,convHullVert,convHullFac,normalize,chckOutward)
 % x y z in 3 colums! Returns the normal vector of the nearest plane.
-% multiple optodes in 3rd dimension.
+% multiple optodes in rows.
 % rev. 2021-08-09: implemented processing of multiple optPos
-% TODO: - xyz input: optodes in rows!
-%       - additional input: switch to normalize normals.
 
 if size(convHullFac,2)==3
     incentFH = @(f,v)mean(cat(3,...
@@ -18,6 +16,16 @@ else
 end
 
 assert(size(optPos,2)==3,'optPos must be row vectors of x,y,z coordinates.');
+
+if nargin<4 || isempty(normalize)
+    normalize = true;
+end
+
+if nargin<5 || isempty(chckOutward)
+    chckOutward = true;
+end
+
+optPos = permute(optPos,[3 2 1]);
 
 nOpt = size(optPos,3);
 incent = incentFH(convHullFac,convHullVert);
@@ -38,4 +46,21 @@ nearestVerts(:,:,any(isnan(optPos),2)) = NaN;
 planeNormal = cross(nearestVerts(1,:,:)-nearestVerts(2,:,:), ...
                     nearestVerts(1,:,:)-nearestVerts(3,:,:), 2);
 % planeNormal(1,:,any(isnan(optPos),2)) = NaN;
+
+
+planeNormal = ipermute(planeNormal,[3 2 1]);
+nearestVerts = ipermute(nearestVerts,[3 2 1]);
+
+if normalize
+    planeNormal = bsxfun(@rdivide, planeNormal, sqrt(sum(planeNormal.^2,2)));
+end
+if chckOutward
+    surfCent = mean(convHullVert,1);
+    nearestVert = mean(nearestVerts,3);
+    nearVertDelta = bsxfun(@minus,nearestVert+planeNormal,surfCent);
+    vertNormDelta = bsxfun(@minus,nearestVert            ,surfCent);
+    iOutWard = sqrt(sum(vertNormDelta.^2, 2)) < ...
+               sqrt(sum(nearVertDelta.^2, 2));
+    planeNormal(~iOutWard,:) = -planeNormal(~iOutWard,:);
+end
 end
