@@ -10,10 +10,6 @@ function [I, u, sI] = dropOptodesOnSurf(optPos,convHullVert,convHullFac)
 [planeNormal, nearVerts] = getOptodeTangentPlane2(optPos,convHullVert,convHullFac,false,false);
 
 
-% planeNormal = permute(planeNormal,[3 2 1]);
-% nearVerts = permute(nearVerts,[3 2 1]);
-% optPos = permute(optPos,[3 2 1]);
-
 u = planeNormal;
 w = optPos - nearVerts(:,:,1);
 D = dot(planeNormal,u,2);
@@ -23,9 +19,6 @@ N = -dot(planeNormal,w,2);
 sI = N ./ D;
 I = optPos + bsxfun(@times,sI,u);
 
-% I = ipermute(I,[3 2 1]);
-% u = ipermute(u,[3 2 1]);
-% sI = ipermute(sI,[3 2 1]);
 
 % dot/inner product of distance photon positions-Optiode position and the
 % plane normal gives the signed distances between plane and photon pos.
