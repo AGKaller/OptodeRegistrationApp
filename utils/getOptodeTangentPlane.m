@@ -2,6 +2,8 @@ function [planeNormal, nearestVerts] = getOptodeTangentPlane(optPos,convHullVert
 % x y z in 3 colums! Returns the normal vector of the nearest plane.
 % multiple optodes in 3rd dimension.
 % rev. 2021-08-09: implemented processing of multiple optPos
+% TODO: - xyz input: optodes in rows!
+%       - additional input: switch to normalize normals.
 
 if size(convHullFac,2)==3
     incentFH = @(f,v)mean(cat(3,...
