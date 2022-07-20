@@ -7,7 +7,7 @@ function [I, u, sI] = dropOptodesOnSurf(optPos,convHullVert,convHullFac)
 
 % get the normal vector of the plane tangential to the convex hull at the
 % Optode position.
-[planeNormal, nearVerts] = getOptodeTangentPlane2(optPos,convHullVert,convHullFac,false,false);
+[planeNormal, nearVerts] = getOptodeTangentPlane(optPos,convHullVert,convHullFac,false,false);
 
 
 u = planeNormal;
