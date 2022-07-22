@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javascript">   
+    function setup(htmlComponent) {
+	    htmlComponent.addEventListener("DataChanged", function(event) {
+            document.getElementById("nAssgn").innerHTML 	= htmlComponent.Data.nAssgn;
+            document.getElementById("nSrcAssgn").innerHTML 	= htmlComponent.Data.nSrcAssgn;
+            document.getElementById("nDetAssgn").innerHTML 	= htmlComponent.Data.nDetAssgn;
+            document.getElementById("nUnassgn").innerHTML 	= htmlComponent.Data.nUnassgn;
+            document.getElementById("nSrcUnassgn").innerHTML 	= htmlComponent.Data.nSrcUnassgn;
+            document.getElementById("nDetUnassgn").innerHTML 	= htmlComponent.Data.nDetUnassgn;
+            document.getElementById("nOpt").innerHTML 	= htmlComponent.Data.nOpt;
+            document.getElementById("nSrc").innerHTML 	= htmlComponent.Data.nSrc;
+            document.getElementById("nDet").innerHTML 	= htmlComponent.Data.nDet;
+        });     
+    }
+</script>
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 10px;
+  border-style: none none none none;
+  border-width: thin;
+}
+
+td, th {
+  border: none;
+  text-align: left;
+  padding: 3px;
+}
+
+#srcCol {
+  background-color: #ff9270;
+  width: 23%;
+}
+#detCol {
+  background-color: #79bffc;
+  width: 23%;
+}
+#totCol {
+  background-color: #dddddd;
+  width: 23%;
+}
+#assgnd {
+  color: darkgreen;
+}
+#unassgnd {
+  color: darkred;
+}
+
+</style>
+</head>
+
+<body>
+<table>
+  <colgroup>
+    <col span="1" style="width: 31%;">
+    <col span="1" id="srcCol">
+    <col span="1" id="detCol">
+    <col span="1" id="totCol">
+  </colgroup>
+  <tr>
+    <th></th>
+    <th>Sources</th>
+    <th>Detectors</th>
+    <th>Total</th>
+  </tr>
+  <tr id="assgnd">
+    <th>Assigned</th>
+    <td id="nSrcAssgn">0</td>
+    <td id="nDetAssgn">0</td>
+    <td id="nAssgn">0</td>
+  </tr>
+  <tr id="unassgnd">
+    <th>Unassigned</th>
+    <td id="nSrcUnassgn">0</td>
+    <td id="nDetUnassgn">0</td>
+    <td id="nUnassgn">0</td>
+  </tr>
+  <tr>
+    <th>Total</th>
+    <td id="nSrc">99</td>
+    <td id="nDet">99</td>
+    <td id="nOpt">99</td>
+  </tr>
+</table>
+
+</body>
+</html>
