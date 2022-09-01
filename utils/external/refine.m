@@ -210,6 +210,6 @@ switch lower(method)
     if setProgrs, prgrsCB(prgrsMinMax(2)); end
 
   otherwise
-    ft_error('unsupported method "%s"', method);
+    error('unsupported method "%s"', method);
 end
 
